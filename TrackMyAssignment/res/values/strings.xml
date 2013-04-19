@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TrackMyAssignment</string>
+    <string name="action_settings">Settings</string>
+    <string name="assignment_title">Assignment Title</string>
+    <string name="assignment_mod">Assignment Module</string>
+    <string name="assignment_descr">Assignment Description</string>
+    <string name="assignment_duedate">Assignment Due Date</string>
+    <string name="add_assign">Add</string>
+    <string name="view_assign">View</string>
+
+</resources>

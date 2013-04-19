@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"> 
+   
+
+     <TextView
+        android:id="@+id/textView1" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/assignment_title" />
+     <EditText android:id="@+id/assignTitle"
+         android:hint=""
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">         
+     </EditText>
+     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/assignment_mod" />
+     <EditText android:id="@+id/assignModule"
+         android:hint=""
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">         
+     </EditText>
+     <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/assignment_descr" />
+     <EditText android:id="@+id/assignDescription"
+         android:hint=""
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">         
+     </EditText>
+
+     <TextView
+         android:id="@+id/textView4"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/assignment_duedate" />
+       <EditText android:id="@+id/assignDueDate"
+         android:hint=""
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">         
+     </EditText>
+
+       <Button
+           android:id="@+id/addAssign"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/add_assign" ></Button>
+
+       <Button
+           android:id="@+id/viewAssign"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/view_assign" ></Button>
+
+</LinearLayout>
