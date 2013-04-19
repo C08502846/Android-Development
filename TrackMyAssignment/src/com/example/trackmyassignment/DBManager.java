@@ -1,3 +1,10 @@
+/*
+ * Mobile Software Development - Assignment
+ * Student Number: C08502846
+ * Github Repository(Public): https://github.com/C08502846/Android-Development
+ */
+
+
 package com.example.trackmyassignment;
 
 import android.content.ContentValues;
