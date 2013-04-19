@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener
 {
@@ -24,7 +25,7 @@ public class MainActivity extends Activity implements OnClickListener
 		addAssign = (Button) findViewById(R.id.addAssign);
 		viewAssign = (Button) findViewById(R.id.viewAssign);
 		
-		assignTitle = (EditText) findViewById(R.id.assignTitle);
+		assignTitle =  (EditText) findViewById(R.id.assignTitle);
 		assignModule = (EditText) findViewById(R.id.assignModule);
 		assignDescr = (EditText) findViewById(R.id.assignDescription);
 		assignDueDate = (EditText) findViewById(R.id.assignDueDate);
@@ -39,9 +40,7 @@ public class MainActivity extends Activity implements OnClickListener
 		switch(v.getId())
 		{
 		case R.id.addAssign:
-			boolean success = true ;
-			try
-			{
+
 			    String title = assignTitle.getText().toString();
 			    String module = assignModule.getText().toString();
 			    String description = assignDescr.getText().toString();
@@ -50,40 +49,31 @@ public class MainActivity extends Activity implements OnClickListener
 			    DBManager addToMyDB = new DBManager(this);
 			    addToMyDB.open();
 			    addToMyDB.addAssignment(title, module, description, duedate);
+			    
+			    assignTitle.setText(""); // Set EditTexts to appear blank when data is entered
+			    assignModule.setText("");
+			    assignDescr.setText("");
+			    assignDueDate.setText("");
+
 			    addToMyDB.close();
-			}
-			catch (Exception e)
-			{
-				success = false ;
-				String error = e.toString();
-				Dialog d = new Dialog(this);
-				d.setTitle("Error");
-				TextView tv = new TextView(this);
-				tv.setText(error);
-				d.setContentView(tv);
-				d.show();
-			}
-			finally
-			{
-				if (success)
-				{
+				
 					Dialog d = new Dialog(this);
 					d.setTitle("Assignment Added.");
 					TextView tv = new TextView(this);
-					tv.setText("Success");
+					tv.setText("Best of luck in your Assignment!");
 					d.setContentView(tv);
-					d.show();					
-				}
-			}
+					Toast toast = Toast.makeText(this, "Assignment Added. \nGood Luck!", Toast.LENGTH_SHORT);
+					toast.show();
+					break;					
+				
+			
 		case R.id.viewAssign:
 			Intent i = new Intent("com.example.trackmyassignment.ViewAssignments");
 			startActivity(i);
 			break;
-	    }
-		
-	}
-		
-
+	    }		
+    }
 }
+
 	
 

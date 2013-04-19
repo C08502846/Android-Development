@@ -104,7 +104,7 @@ public class DBManager {
 		
 		while(c.moveToNext())
 		{
-			result = result + c.getString(0)+" "+c.getString(1)+" "+c.getString(2)+" "+c.getString(3)+" "+c.getString(4)+ "\n";
+			result = result +c.getString(1)+ "\n";
 		}
 		return result;
 	}
