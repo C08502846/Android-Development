@@ -7,7 +7,15 @@
     <string name="assignment_mod">Assignment Module</string>
     <string name="assignment_descr">Assignment Description</string>
     <string name="assignment_duedate">Assignment Due Date</string>
-    <string name="add_assign">Add</string>
+    <string name="update_assign">Update</string>
     <string name="view_assign">View</string>
+    <string name="enterID">Enter ID</string>
+    <string name="get">Get assignment</string>
+    <string name="edit">Edit assignment</string>
+    <string name="delete">Delete assignment</string>
+    
+    
+    
+    
 
 </resources>

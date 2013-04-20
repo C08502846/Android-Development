@@ -40,23 +40,88 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="@string/assignment_duedate" />
+     
        <EditText android:id="@+id/assignDueDate"
          android:hint=""
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:inputType="date">         
+         android:inputType="date">   
+               
      </EditText>
 
-       <Button
-           android:id="@+id/addAssign"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/add_assign" ></Button>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" >
 
-       <Button
-           android:id="@+id/viewAssign"
+           <Button
+               android:id="@+id/view"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/view_assign" />
+
+           <Button
+               android:id="@+id/update"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/update_assign" />
+
+       </LinearLayout>
+
+       <TextView
+           android:id="@+id/textView5"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="@string/view_assign" ></Button>
+           android:text="@string/enterID" />
+
+       <EditText
+           android:id="@+id/rowID"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:ems="10"
+           android:inputType="number" >
+
+           <requestFocus />
+       </EditText>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" >
+
+           <Button
+               android:id="@+id/get"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/get" />
+
+           <Button
+               android:id="@+id/edit"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/edit" />
+
+       </LinearLayout>
+
+       <FrameLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" >
+
+           <TableRow
+               android:id="@+id/tableRow1"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent" >
+           </TableRow>
+
+           <Button
+               android:id="@+id/delete"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/delete" />
+
+           <Button
+               android:id="@+id/delete"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/delete" />
+       </FrameLayout>
 
 </LinearLayout>

@@ -96,17 +96,64 @@ public class DBManager {
 				null, null, null, null);
 		String result = "" ;
 		
-		int iRow = c.getColumnIndex(KEY_ROWID);
-		int iTitle = c.getColumnIndex(KEY_TITLE);
-		int iModule = c.getColumnIndex(KEY_MODULE);
-		int iDescription = c.getColumnIndex(KEY_DESCRIPTION);
-		int iDueDate = c.getColumnIndex(KEY_DUEDATE);
+//		int iRow = c.getColumnIndex(KEY_ROWID);
+//		int iTitle = c.getColumnIndex(KEY_TITLE);
+//		int iModule = c.getColumnIndex(KEY_MODULE);
+//		int iDescription = c.getColumnIndex(KEY_DESCRIPTION);
+//		int iDueDate = c.getColumnIndex(KEY_DUEDATE);
 		
 		while(c.moveToNext())
 		{
-			result = result +c.getString(1)+ "\n";
+			result = result +c.getString(0)+","  +c.getString(1)+ "," +c.getString(2)+"," +c.getString(3)+ "\n";
 		}
 		return result;
 	}
+
+	public String getTitle(long l) 
+	{
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
+		String title = "" ;
+		while(c.moveToNext())
+		{
+			title = c.getString(1);
+		}
+		return title;
+	}
+
+	public String getModule(long l) {
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
+		String module = "" ;
+		while(c.moveToNext())
+		{
+			module = c.getString(2);
+		}
+		return module;
+	}
+
+	public String getDescription(long l) 
+	{
+	String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+	Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
+	String description = "" ;
+	while(c.moveToNext())
+	{
+		description = c.getString(3);
+	}
+	return description;
+	}
+
+	public String getDueDate(long l) 
+	{
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
+		String duedate = "" ;
+		while(c.moveToNext())
+		{
+			duedate = c.getString(4);
+		}
+		return duedate;
+		}
 	
 }
