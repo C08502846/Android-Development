@@ -92,8 +92,7 @@ public class DBManager {
 	public String getData() 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, null,
-				null, null, null, null);
+		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
 		String result = "" ;
 		
 //		int iRow = c.getColumnIndex(KEY_ROWID);
@@ -120,8 +119,21 @@ public class DBManager {
 		}
 		return title;
 	}
+	public String[] getTitle2() 
+	{
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
+		String title[] = null  ;
+		int i = 0 ;
+		while(c.moveToNext())
+		{
+			title[i] = c.getString(1);
+		}
+		return title;
+	}
 
-	public String getModule(long l) {
+	public String getModule(long l) 
+	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
 		String module = "" ;
