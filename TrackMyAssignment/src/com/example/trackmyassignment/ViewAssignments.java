@@ -12,37 +12,50 @@ import android.widget.Toast;
 
 public class ViewAssignments extends ListActivity
 {
-	String[] Assignments ;
-	String[] Assignments1 = {"Assign 1", "Assign 2"};
-	Cursor rAssignments ;
 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		
-		super.onCreate(savedInstanceState);
-    	setContentView(R.layout.view_assignments);
-		
+		try
+		{
+			super.onCreate(savedInstanceState);
+	    	setContentView(R.layout.view_assignments);
+		String[] assignments={"","","",""} ;		
+		String[] assignments1 = {"Assign 1", "Assign 2"};	
 		DBManager myDB ;
 		myDB = new DBManager(this) ;
-		myDB.open();
-		System.out.println("DB Opened");
-		for (int i = 0 ; i < 2 ; i++)
-		{	
-			System.out.println("Before Loop");
-			//Assignments.equals(myDB.getTitle1());
-			Assignments[i] += myDB.getTitle1();
-			Log.i("Assignments Value:", Assignments[i]);		
-		}
-		System.out.println("After Loop");
 		
+		myDB.open();
+		String test ;
+		
+		test = myDB.getTitle1() ;
+		Log.i("test = ", test);		
+		
+		for(int i=0; i < assignments.length ; i++)
+		{
+			assignments[i] = myDB.getTitle1() ;
+		}			
+		
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, assignments));
 		myDB.close();
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.view_assignments);	
-
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, Assignments));		
+		}
+		
+		catch(NullPointerException e)
+		{
+			Toast toast = Toast.makeText(this, "Null Pointer!", Toast.LENGTH_SHORT);
+			toast.show();
+		}
 	}
+	
+//	for(int i=0 ; i < 3 ; i++)
+//	{
+//		//Assignments[i] = myDB.getTitle2()[i];
+//		//Assignments[i] = myDB.getTitle2()[i];			
+//		//Assignments1[i] += myDB.getTitle25()[i];
+//		//Assignments1.equals(myDB.getTitle25());
+//	}
+	//Assignments1.equals(myDB.getTitle25());
 	  protected void onListItemClick(ListView l, View v, int position, long id)
 	    {   
 		     // If Name is clicked, Go to database, get

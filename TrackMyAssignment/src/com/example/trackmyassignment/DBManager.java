@@ -120,12 +120,12 @@ public class DBManager {
 	}
 	public String getTitle1() 
 	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
 		String title = "" ;
 		while(c.moveToNext())
 		{
-			title = c.getString(1);
+			title = c.getString(1) + "\n";
 		}
 		return title;
 	}
@@ -133,18 +133,29 @@ public class DBManager {
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
-		String title = "" ;
-		String[] array = {} ;
+		String[] title = null  ;
+		int i = 0 ;
 		while(c.moveToNext())
-		{
-			title = c.getString(1);
-		}
-		for(int i=0 ; i <array.length; i++)
-		{
-			array[i] = title ;
-		}
-		return array;
+		        {			
+			        title[i] = c.getString(1) ;	
+			        i++ ;
+		        }
+				
+		return title;
 	}
+	 public String[] getTitle25() 
+	   {
+	     String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+	     Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
+	     String title[] = null  ;
+	     int i = 0 ;
+	     while(c.moveToNext())
+	    {
+	       title[i] = c.getString(1);
+	     }
+	     return title;
+	 }
+	
 	public Cursor getTitle3() 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE};
@@ -152,6 +163,19 @@ public class DBManager {
 		
 		return c;
 	}
+	public String getTitle4() 
+	{
+		String[] columns = new String[]{ null, KEY_TITLE, null, null, null,};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
+		String result = "" ;
+			
+		while(c.moveToNext())
+		{
+			result = result  + c.getString(1) + "\n";
+		}
+		return result;
+	}
+	
 
 
 	public String getModule(long l) 

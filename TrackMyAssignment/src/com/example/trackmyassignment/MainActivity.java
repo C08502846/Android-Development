@@ -78,13 +78,7 @@ public class MainActivity extends Activity implements OnClickListener
 				toast.show();
 				break;					
 		case R.id.get:
-			if (rowID == null)
-			{
-				Toast toast2 = Toast.makeText(this, "Please enter a Row number", Toast.LENGTH_SHORT);
-			}
-			
-			
-			else
+			try
 			{
 				String s = rowID.getText().toString(); // Convert whats in Editext into long type
 				long l = Long.parseLong(s);
@@ -100,13 +94,21 @@ public class MainActivity extends Activity implements OnClickListener
 				assignModule.setText(rModule);
 				assignDescr.setText(rDescription);
 				assignDueDate.setText(rDueDate);
+				Toast toast2 = Toast.makeText(this, "" +rTitle+ " Found.", Toast.LENGTH_SHORT);
+				toast2.show();
+			}
+			catch(NumberFormatException e)
+			{
+				System.out.println("Exception Caught!");
+				Toast toast2 = Toast.makeText(this, "Please try again.", Toast.LENGTH_SHORT);
+				toast2.show();				
 			}
 			break;
 			
-		case R.id.view:
-			System.out.println("View Pressed");
-			Intent i = new Intent("com.example.trackmyassignment.ViewAssignments");
-			startActivity(i);
+		case R.id.view:			
+			    System.out.println("View Pressed");
+			    Intent i = new Intent("com.example.trackmyassignment.ViewAssignments");
+			    startActivity(i);			
 			break;
 	    }		
     }
