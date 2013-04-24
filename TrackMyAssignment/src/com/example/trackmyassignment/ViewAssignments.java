@@ -1,7 +1,9 @@
 package com.example.trackmyassignment;
 
 import android.app.ListActivity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -10,25 +12,36 @@ import android.widget.Toast;
 
 public class ViewAssignments extends ListActivity
 {
-	String Assignments[]={"Cloud Comp","Modile Dev" };
-	String Assignments1[] = {"Assignment 1"}  ;
-    
+	String[] Assignments ;
+	String[] Assignments1 = {"Assign 1", "Assign 2"};
+	Cursor rAssignments ;
+	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		
+		super.onCreate(savedInstanceState);
+    	setContentView(R.layout.view_assignments);
+		
 		DBManager myDB ;
 		myDB = new DBManager(this) ;
 		myDB.open();
-		for(int i=0; i < 4 ; i++)
-		{
-			Assignments1.equals(myDB.getTitle2());
+		System.out.println("DB Opened");
+		for (int i = 0 ; i < 2 ; i++)
+		{	
+			System.out.println("Before Loop");
+			//Assignments.equals(myDB.getTitle1());
+			Assignments[i] += myDB.getTitle1();
+			Log.i("Assignments Value:", Assignments[i]);		
 		}
+		System.out.println("After Loop");
 		
-		// return string array from myDB and put it in New String Array
 		myDB.close();
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.view_assignments);		
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, Assignments1));		
+		setContentView(R.layout.view_assignments);	
+
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, Assignments));		
 	}
 	  protected void onListItemClick(ListView l, View v, int position, long id)
 	    {   
@@ -37,7 +50,7 @@ public class ViewAssignments extends ListActivity
 		    //TextView tv = (TextView) findViewById(R.id.info);
 			DBManager info = new DBManager(this);
 			info.open();
-			String data = info.getData();
+			String data = info.getAllData();
 			info.close();
 			//tv.setText(data);
 	    	super.onListItemClick(l, v, position, id); 

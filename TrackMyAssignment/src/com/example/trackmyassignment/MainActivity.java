@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -21,8 +22,9 @@ public class MainActivity extends Activity implements OnClickListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
+		
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main);	
 		update = (Button) findViewById(R.id.update);
 		view = (Button) findViewById(R.id.view);
 		get = (Button) findViewById(R.id.get);
@@ -34,12 +36,14 @@ public class MainActivity extends Activity implements OnClickListener
 		assignDescr = (EditText) findViewById(R.id.assignDescription);
 		assignDueDate = (EditText) findViewById(R.id.assignDueDate);
 		rowID = (EditText) findViewById(R.id.rowID);
-		
+
 		update.setOnClickListener(this);
 		view.setOnClickListener(this);
 		get.setOnClickListener(this);
 		edit.setOnClickListener(this);
 		delete.setOnClickListener(this);
+		
+		
 
 	}
 	@Override
@@ -74,24 +78,33 @@ public class MainActivity extends Activity implements OnClickListener
 				toast.show();
 				break;					
 		case R.id.get:
-			String s = rowID.getText().toString(); // Convert whats in Editext into long type
-			long l = Long.parseLong(s);
-			DBManager myDB = new DBManager(this);
-			myDB.open();
-			String rTitle = myDB.getTitle(l);
-			String rModule = myDB.getModule(l);
-			String rDescription = myDB.getDescription(l);
-			String rDueDate = myDB.getDueDate(l) ;
-			myDB.close();
+			if (rowID == null)
+			{
+				Toast toast2 = Toast.makeText(this, "Please enter a Row number", Toast.LENGTH_SHORT);
+			}
 			
-			assignTitle.setText(rTitle);
-			assignModule.setText(rModule);
-			assignDescr.setText(rDescription);
-			assignDueDate.setText(rDueDate);
 			
+			else
+			{
+				String s = rowID.getText().toString(); // Convert whats in Editext into long type
+				long l = Long.parseLong(s);
+				DBManager myDB = new DBManager(this);
+				myDB.open();
+				String rTitle = myDB.getTitle(l);
+				String rModule = myDB.getModule(l);
+				String rDescription = myDB.getDescription(l);
+				String rDueDate = myDB.getDueDate(l) ;
+				myDB.close();
+				
+				assignTitle.setText(rTitle);
+				assignModule.setText(rModule);
+				assignDescr.setText(rDescription);
+				assignDueDate.setText(rDueDate);
+			}
 			break;
 			
 		case R.id.view:
+			System.out.println("View Pressed");
 			Intent i = new Intent("com.example.trackmyassignment.ViewAssignments");
 			startActivity(i);
 			break;

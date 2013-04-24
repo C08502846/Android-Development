@@ -4,45 +4,27 @@
     android:layout_height="match_parent"> 
    
 
-     <TextView
-        android:id="@+id/textView1" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/assignment_title" />
+     
      <EditText android:id="@+id/assignTitle"
-         android:hint=""
          android:layout_width="match_parent"
-         android:layout_height="wrap_content">         
-     </EditText>
-     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/assignment_mod" />
-     <EditText android:id="@+id/assignModule"
-         android:hint=""
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content">         
-     </EditText>
-     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/assignment_descr" />
-     <EditText android:id="@+id/assignDescription"
-         android:hint=""
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content">         
+         android:layout_height="wrap_content"
+         android:hint="@string/assignment_title">         
      </EditText>
 
-     <TextView
-         android:id="@+id/textView4"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="@string/assignment_duedate" />
+     <EditText android:id="@+id/assignModule"
+         android:hint="@string/hint_module"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">         
+     </EditText>
+    
+     <EditText android:id="@+id/assignDescription"
+         android:hint="@string/hint_descr"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">         
+     </EditText>    
      
        <EditText android:id="@+id/assignDueDate"
-         android:hint=""
+         android:hint="@string/hint_duedate"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:inputType="date">   
@@ -110,12 +92,6 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent" >
            </TableRow>
-
-           <Button
-               android:id="@+id/delete"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="@string/delete" />
 
            <Button
                android:id="@+id/delete"

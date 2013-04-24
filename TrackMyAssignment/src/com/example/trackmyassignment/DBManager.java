@@ -12,6 +12,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 
 
@@ -24,7 +25,7 @@ public class DBManager {
 	public static final String KEY_DUEDATE= "assign_duedate";
 	
 	private static final String DATABASE_NAME = "TrackMyAssignment";
-	private static final String DATABASE_TABLE = "Assignments";
+	static final String DATABASE_TABLE = "Assignments";
 	private static final int DATABASE_VERSION= 1;
 	private static final String CREATE_DATABASE= "CREATE TABLE " + DATABASE_TABLE + " (" +
             KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -59,9 +60,7 @@ public class DBManager {
 			// To Upgrade Database
 			db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
 			onCreate(db);			
-		}
-		
-		
+		}		
 	}
 	public DBManager(Context c)
 	{
@@ -86,10 +85,10 @@ public class DBManager {
 		cv.put(KEY_MODULE, module);
 		cv.put(KEY_DESCRIPTION, description);
 		cv.put(KEY_DUEDATE, duedate);
-		return myDB.insert(DATABASE_TABLE, null, cv);		
+		return myDB.insert(DATABASE_TABLE, null, cv);			
 	}
 
-	public String getData() 
+	public String getAllData() 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
@@ -108,7 +107,7 @@ public class DBManager {
 		return result;
 	}
 
-	public String getTitle(long l) 
+	public String getTitle(long l) // Get Title by rowID
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
@@ -119,18 +118,41 @@ public class DBManager {
 		}
 		return title;
 	}
-	public String[] getTitle2() 
+	public String getTitle1() 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
-		String title[] = null  ;
-		int i = 0 ;
+		String title = "" ;
 		while(c.moveToNext())
 		{
-			title[i] = c.getString(1);
+			title = c.getString(1);
 		}
 		return title;
 	}
+	public String[] getTitle2() 
+	{
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
+		String title = "" ;
+		String[] array = {} ;
+		while(c.moveToNext())
+		{
+			title = c.getString(1);
+		}
+		for(int i=0 ; i <array.length; i++)
+		{
+			array[i] = title ;
+		}
+		return array;
+	}
+	public Cursor getTitle3() 
+	{
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
+		
+		return c;
+	}
+
 
 	public String getModule(long l) 
 	{
