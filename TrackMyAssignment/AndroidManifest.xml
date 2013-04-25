@@ -14,22 +14,23 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.trackmyassignment.MainActivity"
-            android:label="@string/app_name" >
+            android:name="com.example.trackmyassignment.ViewAssignments"
+            android:label="View Assignments" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />                
             </intent-filter>
         </activity>
+        
         <activity
-            android:name=".ViewAssignments"
-            android:label="@string/app_name" >
+            android:name="com.example.trackmyassignment.MainActivity"
+            android:label="Edit Assignment" >
             <intent-filter>
-                <action android:name="com.example.trackmyassignment.ViewAssignments" />
+                <action android:name="com.example.trackmyassignment.MainActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
     </application>
 
 </manifest>

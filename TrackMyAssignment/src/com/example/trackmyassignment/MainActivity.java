@@ -3,6 +3,7 @@ package com.example.trackmyassignment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -146,13 +147,22 @@ public class MainActivity extends Activity implements OnClickListener
 			}
 			break;
 			
-		case R.id.view:			
-			    System.out.println("View Pressed");
-			    Intent i = new Intent("com.example.trackmyassignment.ViewAssignments");
-			    startActivity(i);			
-			break;
+		case R.id.view:
+			try
+			{
+				System.out.println("View Pressed");
+			    startActivity(new Intent(MainActivity.this, ViewAssignments.class));
+			    break;
+			}
+			catch(ActivityNotFoundException e)
+			{
+				Toast toast2 = Toast.makeText(this, "Activity Not Found", Toast.LENGTH_SHORT);
+				toast2.show();	
+			}
+			    
 	    }		
     }
+
 }
 
 	

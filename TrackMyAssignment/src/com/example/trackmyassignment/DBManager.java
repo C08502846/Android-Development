@@ -141,8 +141,6 @@ public class DBManager {
 		while(c.moveToNext())
 		        {			
 			        columnArray1.add(c.getString(1));
-//			        title[i] = c.getString(1) ;	
-//			        i++ ;
 		        }
 		String[] colStrArr1 = (String[]) columnArray1.toArray(new String[columnArray1.size()]);
 
@@ -181,7 +179,6 @@ public class DBManager {
 		return result;
 	}
 	
-
 
 	public String getModule(long l) 
 	{
