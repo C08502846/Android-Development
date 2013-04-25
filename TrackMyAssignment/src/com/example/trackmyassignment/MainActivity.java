@@ -65,18 +65,18 @@ public class MainActivity extends Activity implements OnClickListener
 			        }
 					else if(module.isEmpty())
 					{
-						Toast toast3 = Toast.makeText(this, "Empty Module.", Toast.LENGTH_SHORT);
-						toast3.show();
+						Toast toast1 = Toast.makeText(this, "Empty Module.", Toast.LENGTH_SHORT);
+						toast1.show();
 					}
 					else if(description.isEmpty())
 					{
-						Toast toast4 = Toast.makeText(this, "Empty Desctiption.", Toast.LENGTH_SHORT);
-						toast4.show();
+						Toast toast2 = Toast.makeText(this, "Empty Desctiption.", Toast.LENGTH_SHORT);
+						toast2.show();
 					}
 					else if( duedate.isEmpty())
 					{
-						Toast toast5 = Toast.makeText(this, "Empty Due Date.", Toast.LENGTH_SHORT);
-						toast5.show();
+						Toast toast3 = Toast.makeText(this, "Empty Due Date.", Toast.LENGTH_SHORT);
+						toast3.show();
 					}
 //					else if ( title.isEmpty() && module.isEmpty() && description.isEmpty() && duedate.isEmpty())
 //					{
@@ -102,8 +102,8 @@ public class MainActivity extends Activity implements OnClickListener
 							TextView tv = new TextView(this);
 							tv.setText("Best of luck in your Assignment!");
 							d.setContentView(tv);
-							Toast toast2 = Toast.makeText(this, "Assignment Added. \nGood Luck in your "+title+" Assignment!", Toast.LENGTH_SHORT);
-							toast2.show();
+							Toast toast4 = Toast.makeText(this, "Assignment Added. \nGood Luck in your "+title+" Assignment!", Toast.LENGTH_SHORT);
+							toast4.show();
 							break;
 					}
 			    
@@ -125,8 +125,18 @@ public class MainActivity extends Activity implements OnClickListener
 				assignModule.setText(rModule);
 				assignDescr.setText(rDescription);
 				assignDueDate.setText(rDueDate);
-				Toast toast2 = Toast.makeText(this, "" +rTitle+ " found.", Toast.LENGTH_SHORT);
-				toast2.show();
+				
+				if(rTitle.isEmpty() && rModule.isEmpty() && rDescription.isEmpty() && rDueDate.isEmpty())
+				{
+					Toast toast5 = Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT);
+					toast5.show();
+				}
+				else
+				{
+					Toast toast6 = Toast.makeText(this, "" +rTitle+ " found.", Toast.LENGTH_SHORT);
+					toast6.show();
+				}
+				
 			}
 			catch(NumberFormatException e)
 			{

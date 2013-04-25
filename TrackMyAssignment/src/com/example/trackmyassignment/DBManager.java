@@ -7,6 +7,8 @@
 
 package com.example.trackmyassignment;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -125,7 +127,7 @@ public class DBManager {
 		String title = "" ;
 		while(c.moveToNext())
 		{
-			title = c.getString(1) + "\n";
+			title += c.getString(1) + "\n";
 		}
 		return title;
 	}
@@ -135,13 +137,16 @@ public class DBManager {
 		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
 		String[] title = null  ;
 		int i = 0 ;
+		ArrayList<String> columnArray1 = new ArrayList<String>();
 		while(c.moveToNext())
 		        {			
-			        title[i] = c.getString(1) ;	
-			        i++ ;
+			        columnArray1.add(c.getString(1));
+//			        title[i] = c.getString(1) ;	
+//			        i++ ;
 		        }
-				
-		return title;
+		String[] colStrArr1 = (String[]) columnArray1.toArray(new String[columnArray1.size()]);
+
+		return colStrArr1;
 	}
 	 public String[] getTitle25() 
 	   {

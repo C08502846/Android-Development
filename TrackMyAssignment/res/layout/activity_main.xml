@@ -5,11 +5,6 @@
     android:background="@drawable/view"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </RelativeLayout>
-
     <EditText
         android:id="@+id/assignTitle"
         android:layout_width="match_parent"
