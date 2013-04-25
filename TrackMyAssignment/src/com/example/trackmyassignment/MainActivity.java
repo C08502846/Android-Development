@@ -1,5 +1,6 @@
 package com.example.trackmyassignment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -42,10 +43,8 @@ public class MainActivity extends Activity implements OnClickListener
 		get.setOnClickListener(this);
 		edit.setOnClickListener(this);
 		delete.setOnClickListener(this);
-		
-		
-
 	}
+	@SuppressLint("NewApi")
 	@Override
 	public void onClick(View v) 
 	{
@@ -56,45 +55,77 @@ public class MainActivity extends Activity implements OnClickListener
 			    String title = assignTitle.getText().toString();
 			    String module = assignModule.getText().toString();
 			    String description = assignDescr.getText().toString();
-			    String duedate = assignDueDate.getText().toString();			    
-			
-			    DBManager addToMyDB = new DBManager(this);
-			    addToMyDB.open();
-			    addToMyDB.addAssignment(title, module, description, duedate);
+			    String duedate = assignDueDate.getText().toString();
 			    
-			    assignTitle.setText(""); // Set EditTexts to appear blank when data is entered
-			    assignModule.setText("");
-			    assignDescr.setText("");
-			    assignDueDate.setText("");
+			    
+			        if (title.isEmpty())
+			        {
+			    	Toast toast = Toast.makeText(this, "Empty Title.", Toast.LENGTH_SHORT);
+					toast.show();
+			        }
+					else if(module.isEmpty())
+					{
+						Toast toast3 = Toast.makeText(this, "Empty Module.", Toast.LENGTH_SHORT);
+						toast3.show();
+					}
+					else if(description.isEmpty())
+					{
+						Toast toast4 = Toast.makeText(this, "Empty Desctiption.", Toast.LENGTH_SHORT);
+						toast4.show();
+					}
+					else if( duedate.isEmpty())
+					{
+						Toast toast5 = Toast.makeText(this, "Empty Due Date.", Toast.LENGTH_SHORT);
+						toast5.show();
+					}
+//					else if ( title.isEmpty() && module.isEmpty() && description.isEmpty() && duedate.isEmpty())
+//					{
+//						Toast toast6 = Toast.makeText(this, "All Fields Empty.", Toast.LENGTH_SHORT);
+//						toast6.show();
+//					}
+						
+					else
+					{
+						 DBManager myDB = new DBManager(this);
+						    myDB.open();
+						    myDB.addAssignment(title, module, description, duedate);
+						    
+						    assignTitle.setText(""); // Set EditTexts to appear blank when data is entered
+						    assignModule.setText("");
+						    assignDescr.setText("");
+						    assignDueDate.setText("");
 
-			    addToMyDB.close();
-				
-				Dialog d = new Dialog(this);
-				d.setTitle("Assignment Added.");
-				TextView tv = new TextView(this);
-				tv.setText("Best of luck in your Assignment!");
-				d.setContentView(tv);
-				Toast toast = Toast.makeText(this, "Assignment Added. \nGood Luck in your " +title+" Assignment!", Toast.LENGTH_SHORT);
-				toast.show();
-				break;					
+						    myDB.close();
+							
+							Dialog d = new Dialog(this);
+							d.setTitle("Assignment Added.");
+							TextView tv = new TextView(this);
+							tv.setText("Best of luck in your Assignment!");
+							d.setContentView(tv);
+							Toast toast2 = Toast.makeText(this, "Assignment Added. \nGood Luck in your "+title+" Assignment!", Toast.LENGTH_SHORT);
+							toast2.show();
+							break;
+					}
+			    
+			   					
 		case R.id.get:
 			try
 			{
 				String s = rowID.getText().toString(); // Convert whats in Editext into long type
 				long l = Long.parseLong(s);
-				DBManager myDB = new DBManager(this);
-				myDB.open();
-				String rTitle = myDB.getTitle(l);
-				String rModule = myDB.getModule(l);
-				String rDescription = myDB.getDescription(l);
-				String rDueDate = myDB.getDueDate(l) ;
-				myDB.close();
+				DBManager myDB2 = new DBManager(this);
+				myDB2.open();
+				String rTitle = myDB2.getTitle(l);
+				String rModule = myDB2.getModule(l);
+				String rDescription = myDB2.getDescription(l);
+				String rDueDate = myDB2.getDueDate(l) ;
+				myDB2.close();
 				
 				assignTitle.setText(rTitle);
 				assignModule.setText(rModule);
 				assignDescr.setText(rDescription);
 				assignDueDate.setText(rDueDate);
-				Toast toast2 = Toast.makeText(this, "" +rTitle+ " Found.", Toast.LENGTH_SHORT);
+				Toast toast2 = Toast.makeText(this, "" +rTitle+ " found.", Toast.LENGTH_SHORT);
 				toast2.show();
 			}
 			catch(NumberFormatException e)
