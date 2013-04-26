@@ -146,26 +146,8 @@ public class DBManager {
 
 		return colStrArr1;
 	}
-	 public String[] getTitle25() 
-	   {
-	     String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
-	     Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
-	     String title[] = null  ;
-	     int i = 0 ;
-	     while(c.moveToNext())
-	    {
-	       title[i] = c.getString(1);
-	     }
-	     return title;
-	 }
 	
-	public Cursor getTitle3() 
-	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
-		
-		return c;
-	}
+
 	public String getTitle4() 
 	{
 		String[] columns = new String[]{ null, KEY_TITLE, null, null, null,};
@@ -215,5 +197,35 @@ public class DBManager {
 		}
 		return duedate;
 		}
+
+	public String getDataPos(long l) 
+	{
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
+		String allInfo = "" ;
+		while(c.moveToNext())
+		{
+			allInfo = c.getString(4);
+		}
+		return allInfo;
+	}
+
+	public void updateAssignments(long l, String eTitle, String eModule,
+			String eDescription, String eDueDate) 
+	{
+		ContentValues cv = new ContentValues();
+		cv.put(KEY_TITLE, eTitle);
+		cv.put(KEY_MODULE, eModule);
+		cv.put(KEY_DESCRIPTION, eDescription);
+		cv.put(KEY_DUEDATE, eDueDate);
+		myDB.update(DATABASE_TABLE, cv, KEY_ROWID + "=" + l, null);
+		
+	}
+
+	public void delete(long l) 
+	{
+		myDB.delete(DATABASE_TABLE, KEY_ROWID + "=" + l, null); 
+	}
+	
 	
 }

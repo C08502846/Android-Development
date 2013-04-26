@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.trackmyassignment.ViewAssignments"
-            android:label="View Assignments" >
+            android:label="Assignment Tracker" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />                
@@ -27,6 +27,15 @@
             android:label="Edit Assignment" >
             <intent-filter>
                 <action android:name="com.example.trackmyassignment.MainActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.example.trackmyassignment.ViewIndividual"
+            android:label="Edit Assignment" >
+            <intent-filter>
+                <action android:name="com.example.trackmyassignment.ViewIndividual" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

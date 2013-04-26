@@ -30,25 +30,48 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		myDB.open();		
 		String[] assignments = myDB.getTitle2() ;
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, assignments));
+		if(assignments == null)
+		{
+			String[] empty = {"No assignments added yet."};
+			setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, empty));
+		}
 		myDB.close();
 	}
-	  protected void onListItemClick(ListView l, View v, int position, long id)
+	
+	  protected void onListItemClick(View v, int position, long id)
 	    {
-		  DBManager myDB= new DBManager(this);
-		  myDB.open();
-		  super.onListItemClick(l, v, position, id);
-		  String selection = l.getItemAtPosition(position).toString();
-		  AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		  builder.setTitle(selection).setMessage(myDB.getAllData()).setCancelable(false)
-		  .setPositiveButton("Complete", new DialogInterface.OnClickListener(){
-		   public void onClick(DialogInterface dialog, int id)
-		     {
-		    	 // myDB.deleteAssign(position);
-		     }
-		  });
-		  AlertDialog alert = builder.create();
-		  alert.show();		  
-		  myDB.close();
+		    //getTitle(position);
+		    super.onListItemClick(null, v, position, id);
+//			System.out.println("List Clicked");
+//			startActivity(new Intent(ViewAssignments.this, ViewIndividual.class));
+//			
+		       v.setOnClickListener(new OnClickListener() 
+		       {
+			    @Override
+			    public void onClick(View v) 
+			    {
+			    	System.out.println("List Clicked");
+			        startActivity(new Intent(getApplicationContext(), ViewIndividual.class));
+			    }
+			});
+		        	
+				
+		  
+//		  DBManager myDB= new DBManager(this);
+//		  myDB.open();
+//		 
+//		  
+//		  AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//		  builder.setTitle(selection).setMessage(myDB.getAllData()).setCancelable(false)
+//		  .setPositiveButton("Complete", new DialogInterface.OnClickListener(){
+//		   public void onClick(DialogInterface dialog, int id)
+//		     {
+//		    	 // myDB.deleteAssign(position);
+//		     }
+//		  });
+//		  AlertDialog alert = builder.create();
+//		  alert.show();		  
+//		  myDB.close();
 //		  myDB.getAllData();
 //		  Dialog d = new Dialog(this);
 //		  

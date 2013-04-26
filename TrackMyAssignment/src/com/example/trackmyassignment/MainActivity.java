@@ -27,7 +27,7 @@ public class MainActivity extends Activity implements OnClickListener
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);	
-		update = (Button) findViewById(R.id.update);
+		update = (Button) findViewById(R.id.add);
 		view = (Button) findViewById(R.id.view);
 		get = (Button) findViewById(R.id.get);
 		edit = (Button) findViewById(R.id.edit);
@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		switch(v.getId())
 		{
-		case R.id.update:
+		case R.id.add:
 
 			    String title = assignTitle.getText().toString();
 			    String module = assignModule.getText().toString();
@@ -106,8 +106,7 @@ public class MainActivity extends Activity implements OnClickListener
 							Toast toast4 = Toast.makeText(this, "Assignment Added. \nGood Luck in your "+title+" Assignment!", Toast.LENGTH_SHORT);
 							toast4.show();
 							break;
-					}
-			    
+					}		    
 			   					
 		case R.id.get:
 			try
@@ -159,7 +158,48 @@ public class MainActivity extends Activity implements OnClickListener
 				Toast toast2 = Toast.makeText(this, "Activity Not Found", Toast.LENGTH_SHORT);
 				toast2.show();	
 			}
-			    
+		case R.id.edit:
+		    try {
+				String eTitle = assignTitle.getText().toString();
+				String eModule = assignModule.getText().toString();
+				String eDescription = assignDescr.getText().toString();
+				String eDueDate = assignDueDate.getText().toString();
+				
+				String s = rowID.getText().toString(); // Convert whats in Editext into long type
+				long l = Long.parseLong(s);
+				
+				DBManager myDB ;
+				myDB = new DBManager(this) ;
+				myDB.open();
+				myDB.updateAssignments(l, eTitle, eModule, eDescription, eDueDate);	
+				myDB.close();
+				Toast toast2 = Toast.makeText(this, "Assignment successfully edited", Toast.LENGTH_SHORT);
+				toast2.show();	
+				break;
+			} catch (NumberFormatException e) 
+			{				
+				Toast toast2 = Toast.makeText(this, "No Title Entered", Toast.LENGTH_SHORT);
+				toast2.show();
+				e.printStackTrace();
+			}
+		case R.id.delete:
+			try {
+				String s = rowID.getText().toString(); // Convert whats in Editext into long type
+				long l = Long.parseLong(s);
+				DBManager myDB ;
+				myDB = new DBManager(this) ;
+				myDB.open();
+				myDB.delete(l);
+				myDB.close();
+				Toast toast2 = Toast.makeText(this, "Assignment successfully deleted", Toast.LENGTH_SHORT);
+				toast2.show();
+			} catch (NumberFormatException e) 
+			{
+				Toast toast2 = Toast.makeText(this, "No Title Entered", Toast.LENGTH_SHORT);
+				toast2.show();
+				e.printStackTrace();
+			}
+			
 	    }		
     }
 
