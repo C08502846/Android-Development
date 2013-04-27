@@ -6,7 +6,6 @@
     <string name="assignment_title">Assignment Title</string>
     <string name="hint_title">Assignment Title Here</string>
     <string name="hint_module">Assignment Module</string>
-    <string name="hint_descr">Assignment Description</string>
     <string name="hint_duedate">Due Date: E.g. 01/12/11</string>
     <string name="update_assign">Update</string>
     <string name="add_assign">Add</string>

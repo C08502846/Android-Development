@@ -10,21 +10,16 @@
         android:id="@+id/assignTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/assignment_title" >
+        android:hint="@string/assignment_title"
+        android:imeOptions="actionDone" >
     </EditText>
 
     <EditText
         android:id="@+id/assignModule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_module" >
-    </EditText>
-
-    <EditText
-        android:id="@+id/assignDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_descr" >
+        android:hint="@string/hint_module"
+        android:imeOptions="actionDone" >
     </EditText>
 
     <EditText
@@ -32,7 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_duedate"
-        android:inputType="date" >
+        android:inputType="date"
+        android:imeOptions="actionDone" >
     </EditText>
 
     <LinearLayout

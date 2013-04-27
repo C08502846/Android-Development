@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -23,7 +24,6 @@ public class DBManager {
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_TITLE = "assign_title";
 	public static final String KEY_MODULE= "assign_module";
-	public static final String KEY_DESCRIPTION= "assign_description";
 	public static final String KEY_DUEDATE= "assign_duedate";
 	
 	private static final String DATABASE_NAME = "TrackMyAssignment";
@@ -33,7 +33,6 @@ public class DBManager {
             KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 		    KEY_TITLE + " TEXT NOT NULL, " + 
 		    KEY_MODULE + " TEXT NOT NULL, " + 
-		    KEY_DESCRIPTION + " TEXT NOT NULL, " +
 		    KEY_DUEDATE + " TEXT NOT NULL);" ;
 	
 	
@@ -69,6 +68,13 @@ public class DBManager {
 		myContext = c;
 	}
 	
+
+	void publicDBManager(
+			android.content.DialogInterface.OnClickListener onClickListener) {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public DBManager open()
 	{
 		myHelper = new DbHelper(myContext);
@@ -80,19 +86,18 @@ public class DBManager {
 		myHelper.close(); // To close DbHelper
 	}
 
-	public long addAssignment(String title, String module, String description, String duedate) 
+	public long addAssignment(String title, String module, String duedate) 
 	{
 		ContentValues cv = new ContentValues();
 		cv.put(KEY_TITLE, title);
 		cv.put(KEY_MODULE, module);
-		cv.put(KEY_DESCRIPTION, description);
 		cv.put(KEY_DUEDATE, duedate);
 		return myDB.insert(DATABASE_TABLE, null, cv);			
 	}
 
 	public String getAllData() 
 	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
 		String result = "" ;
 		
@@ -111,7 +116,7 @@ public class DBManager {
 
 	public String getTitle(long l) // Get Title by rowID
 	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
 		String title = "" ;
 		while(c.moveToNext())
@@ -131,7 +136,7 @@ public class DBManager {
 		}
 		return title;
 	}
-	public String[] getTitle2() 
+	public String[] getTitleForList() 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
@@ -145,6 +150,21 @@ public class DBManager {
 		String[] colStrArr1 = (String[]) columnArray1.toArray(new String[columnArray1.size()]);
 
 		return colStrArr1;
+	}
+	public String[] getModuleForList() 
+	{
+		String[] columns = new String[]{ KEY_ROWID, KEY_MODULE};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
+		String[] module = null  ;
+		int i = 0 ;
+		ArrayList<String> modules = new ArrayList<String>();
+		while(c.moveToNext())
+		        {			
+			        modules.add(c.getString(1));
+		        }
+		String[] modulesReturn = (String[]) modules.toArray(new String[modules.size()]);
+
+		return modulesReturn;
 	}
 	
 
@@ -164,7 +184,7 @@ public class DBManager {
 
 	public String getModule(long l) 
 	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
 		String module = "" ;
 		while(c.moveToNext())
@@ -176,7 +196,7 @@ public class DBManager {
 
 	public String getDescription(long l) 
 	{
-	String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+	String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
 	Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
 	String description = "" ;
 	while(c.moveToNext())
@@ -188,19 +208,19 @@ public class DBManager {
 
 	public String getDueDate(long l) 
 	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
 		String duedate = "" ;
 		while(c.moveToNext())
 		{
-			duedate = c.getString(4);
+			duedate = c.getString(3);
 		}
 		return duedate;
 		}
 
 	public String getDataPos(long l) 
 	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DESCRIPTION, KEY_DUEDATE};
+		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
 		String allInfo = "" ;
 		while(c.moveToNext())
@@ -210,13 +230,11 @@ public class DBManager {
 		return allInfo;
 	}
 
-	public void updateAssignments(long l, String eTitle, String eModule,
-			String eDescription, String eDueDate) 
+	public void editAssignments(long l, String eTitle, String eModule, String eDueDate) 
 	{
 		ContentValues cv = new ContentValues();
 		cv.put(KEY_TITLE, eTitle);
 		cv.put(KEY_MODULE, eModule);
-		cv.put(KEY_DESCRIPTION, eDescription);
 		cv.put(KEY_DUEDATE, eDueDate);
 		myDB.update(DATABASE_TABLE, cv, KEY_ROWID + "=" + l, null);
 		
@@ -225,7 +243,5 @@ public class DBManager {
 	public void delete(long l) 
 	{
 		myDB.delete(DATABASE_TABLE, KEY_ROWID + "=" + l, null); 
-	}
-	
-	
+	}	
 }
