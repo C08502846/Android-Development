@@ -41,12 +41,6 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		myDB.open();		
 		String[] assignments = myDB.getModuleForList() ;
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, assignments));
-		
-		if(assignments == null)
-		{
-			String[] empty = {"No assignments added yet."};
-			setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, empty));
-		}
 		myDB.close();
 	}
 	
@@ -54,13 +48,24 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 	    {
 		   //super.onListItemClick(null, v, position, id);
 		  System.out.println("List Clicked");				  
-		  String selection = l.getItemAtPosition(position).toString();
+		  final String selection = l.getItemAtPosition(position).toString();
 		  
+		  System.err.println("ListView="+l);
+		  System.err.println("view="+v);
+		  System.err.println("position="+position); 
+		  System.err.println("id="+id); 
+		  System.err.println("selection="+selection);		  
 		  
 		  myDB.open();	
-			
+		  String data = "Yo!!!";
+		  System.err.println("data="+data); 
+		  
+		  data = myDB.getDataByModule(selection);
+		  
+		  System.err.println("data="+data); 
+		  
 		  AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		  builder.setTitle(selection).setMessage(myDB.getAllData()).setCancelable(false).
+		  builder.setTitle(selection).setMessage(myDB.getDataByModule(selection)).setCancelable(false).
 		  setNegativeButton("Close", new DialogInterface.OnClickListener(){
 			   public void onClick(DialogInterface dialog, int id)
 			     {
@@ -71,39 +76,15 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		  .setPositiveButton("Complete", new DialogInterface.OnClickListener(){
 		   public void onClick(DialogInterface dialog, int id)
 		     {
-			     Log.i("TEST", "Complete Clicked!");
-			     //complete(selection);
-		    	 // Delete THIS position from DB. :)			    
+			     myDB.open();
+			     myDB.complete(selection);
+			     myDB.close();		    
 		     }		   
 		  });
 		  AlertDialog alert = builder.create();
 		  alert.show();		  
-		  myDB.close();
-		  
-		  
-//		  myDB.getAllData();
-//		  Dialog d = new Dialog(this);
-//		  
-//		  d.setTitle(selection);		
-//		  TextView text = new  TextView(this);
-//		  text.setTextColor(Color.parseColor("#FFFFFF"));
-//		  text.setText(myDB.getAllData());
-//		  
-//		  d.setContentView(text);
-//		  d.show();
+		  myDB.close();		  
 	    }
-		  
-		
-		  
-//			DBManager myDB= new DBManager(this);
-//			myDB.open();
-//			String data = myDB.getAllData();
-//			myDB.close();
-//			//tv.setText(data);
-//	    	super.onListItemClick(l, v, position, id); 
-//	    	String selection = l.getItemAtPosition(position).toString(); 
-//	    	Toast.makeText(this, selection, Toast.LENGTH_SHORT).show(); 
-//	    }
 	public void complete(String selection)
 	  {
 		    String cTitle = assignTitle.getText().toString();							

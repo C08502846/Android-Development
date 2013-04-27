@@ -216,7 +216,7 @@ public class DBManager {
 			duedate = c.getString(3);
 		}
 		return duedate;
-		}
+	}
 
 	public String getDataPos(long l) 
 	{
@@ -244,4 +244,19 @@ public class DBManager {
 	{
 		myDB.delete(DATABASE_TABLE, KEY_ROWID + "=" + l, null); 
 	}	
+	public String getDataByModule(String myString)
+	{
+		String[] columns = new String[]{ KEY_TITLE, KEY_DUEDATE};
+		Cursor c = myDB.query(DATABASE_TABLE, columns, "assign_module"+" LIKE '"+myString+"%'", null, null, null, null);
+		String myData = "" ;
+		while(c.moveToNext())
+		{
+			myData += "Title: " + c.getString(0) + "\n" + "Due Date: " + c.getString(1) + "\n"; //+ c.getString(2) + "\n"; 
+		}
+		return myData;
+	}
+	public void complete(String deleteData)
+	{
+		myDB.delete(DATABASE_TABLE, "assign_module"+" LIKE '"+deleteData+"%'", null);
+	}
 }
