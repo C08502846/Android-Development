@@ -115,5 +115,10 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		Toast toast14 = Toast.makeText(this, "Congratulations on completing your " +globalSelection+ " assignment!", Toast.LENGTH_SHORT);
 		toast14.show();
 	}
+	public void randomToastMaker()
+	{
+		Toast a, b, c, d, e, f, g ;
+		a = Toast.makeText(this, "Congratulations on completing your " +globalSelection+ " assignment!", Toast.LENGTH_SHORT);
+	}
 
 }

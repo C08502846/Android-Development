@@ -67,14 +67,6 @@ public class DBManager {
 	{
 		myContext = c;
 	}
-	
-
-	void publicDBManager(
-			android.content.DialogInterface.OnClickListener onClickListener) {
-		// TODO Auto-generated constructor stub
-	}
-
-
 	public DBManager open()
 	{
 		myHelper = new DbHelper(myContext);
@@ -151,6 +143,7 @@ public class DBManager {
 
 		return colStrArr1;
 	}
+	
 	public String[] getModuleForList() 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_MODULE};
@@ -165,22 +158,7 @@ public class DBManager {
 		String[] modulesReturn = (String[]) modules.toArray(new String[modules.size()]);
 
 		return modulesReturn;
-	}
-	
-
-	public String getTitle4() 
-	{
-		String[] columns = new String[]{ null, KEY_TITLE, null, null, null,};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
-		String result = "" ;
-			
-		while(c.moveToNext())
-		{
-			result = result  + c.getString(1) + "\n";
-		}
-		return result;
-	}
-	
+	}		
 
 	public String getModule(long l) 
 	{
@@ -196,9 +174,9 @@ public class DBManager {
 
 	public String getDescription(long l) 
 	{
-	String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
-	Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
-	String description = "" ;
+	    String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
+	    Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
+	    String description = "" ;
 	while(c.moveToNext())
 	{
 		description = c.getString(3);
@@ -230,20 +208,20 @@ public class DBManager {
 		return allInfo;
 	}
 
-	public void editAssignments(long l, String eTitle, String eModule, String eDueDate) 
+	public void updateAssignments(long l, String eTitle, String eModule, String eDueDate) 
 	{
 		ContentValues cv = new ContentValues();
 		cv.put(KEY_TITLE, eTitle);
 		cv.put(KEY_MODULE, eModule);
 		cv.put(KEY_DUEDATE, eDueDate);
-		myDB.update(DATABASE_TABLE, cv, KEY_ROWID + "=" + l, null);
-		
+		myDB.update(DATABASE_TABLE, cv, KEY_ROWID + "=" + l, null);		
 	}
 
 	public void delete(long l) 
 	{
 		myDB.delete(DATABASE_TABLE, KEY_ROWID + "=" + l, null); 
-	}	
+	}
+	
 	public String getDataByModule(String myString)
 	{
 		String[] columns = new String[]{ KEY_TITLE, KEY_DUEDATE};
