@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,31 +16,36 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener
 {
 	
-	Button update, view, get, edit, delete;
+	Button add, update, view, find, delete, clear ;
 	EditText assignTitle, assignModule, assignDueDate,
 	rowID ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{		
+		//ActionBar actionBar = getActionBar();
+		//actionBar.hide();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);	
-		update = (Button) findViewById(R.id.add);
+		add = (Button) findViewById(R.id.add);
 		view = (Button) findViewById(R.id.view);
-		get = (Button) findViewById(R.id.get);
-		edit = (Button) findViewById(R.id.edit);
+		find = (Button) findViewById(R.id.find);
+		update = (Button) findViewById(R.id.update);
 		delete = (Button) findViewById(R.id.delete);
+		clear = (Button) findViewById(R.id.clear);
+
 		
 		assignTitle =  (EditText) findViewById(R.id.assignTitle);
 		assignModule = (EditText) findViewById(R.id.assignModule);		
 		assignDueDate = (EditText) findViewById(R.id.assignDueDate);
 		rowID = (EditText) findViewById(R.id.rowID);
 
-		update.setOnClickListener(this);
+		add.setOnClickListener(this);
 		view.setOnClickListener(this);
-		get.setOnClickListener(this);
-		edit.setOnClickListener(this);
+		find.setOnClickListener(this);
+		update.setOnClickListener(this);
 		delete.setOnClickListener(this);
+		clear.setOnClickListener(this);
 	}
 	@SuppressLint("NewApi")
 	@Override
@@ -58,30 +62,29 @@ public class MainActivity extends Activity implements OnClickListener
 			    
 			        if (title.isEmpty())
 			        {
-			    	Toast toast = Toast.makeText(this, "Empty Title.", Toast.LENGTH_SHORT);
-					toast.show();
+			    	    Toast toast = Toast.makeText(this, "Empty Title.", Toast.LENGTH_SHORT);
+					    toast.show();
+					    break;
 			        }
 					else if(module.isEmpty())
 					{
 						Toast toast1 = Toast.makeText(this, "Empty Module.", Toast.LENGTH_SHORT);
 						toast1.show();
+						break;
 					}					
 					else if( duedate.isEmpty())
 					{
-						Toast toast3 = Toast.makeText(this, "Empty Due Date.", Toast.LENGTH_SHORT);
-						toast3.show();
+						Toast toast2 = Toast.makeText(this, "Empty Due Date.", Toast.LENGTH_SHORT);
+						toast2.show();
+						break;
 					}
-//					else if ( title.isEmpty() && module.isEmpty() && description.isEmpty() && duedate.isEmpty())
-//					{
-//						Toast toast6 = Toast.makeText(this, "All Fields Empty.", Toast.LENGTH_SHORT);
-//						toast6.show();
-//					}
+
 						
 					else
 					{
 						 DBManager myDB = new DBManager(this);
-						    myDB.open();
-						    myDB.addAssignment(title, module, duedate);
+						 myDB.open();
+						 myDB.addAssignment(title, module, duedate);
 						    
 						    assignTitle.setText(""); // Set EditTexts to appear blank when data is entered
 						    assignModule.setText("");						   
@@ -94,12 +97,13 @@ public class MainActivity extends Activity implements OnClickListener
 							TextView tv = new TextView(this);
 							tv.setText("Best of luck in your Assignment!");
 							d.setContentView(tv);
-							Toast toast4 = Toast.makeText(this, "Assignment Added. \nGood Luck in your "+title+" Assignment!", Toast.LENGTH_SHORT);
-							toast4.show();
+							Toast toast3 = Toast.makeText(this, "              " +
+									"Assignment Added.\nGood Luck in your "+title+" Assignment!", Toast.LENGTH_SHORT);
+							toast3.show();
 							break;
 					}		    
 			   					
-		case R.id.get:
+		case R.id.find:
 			try
 			{
 				String s = rowID.getText().toString(); // Convert whats in Editext into long type
@@ -117,37 +121,38 @@ public class MainActivity extends Activity implements OnClickListener
 				
 				if(rTitle.isEmpty() && rModule.isEmpty()  && rDueDate.isEmpty())
 				{
-					Toast toast5 = Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT);
-					toast5.show();
+					Toast toast4 = Toast.makeText(this, "No Data Found.", Toast.LENGTH_SHORT);
+					toast4.show();
+					break;
 				}
 				else
 				{
-					Toast toast6 = Toast.makeText(this, "" +rTitle+ " found.", Toast.LENGTH_SHORT);
-					toast6.show();
+					Toast toast5 = Toast.makeText(this, "" +rTitle+ " found.", Toast.LENGTH_SHORT);
+					toast5.show();
+					break;
 				}
 				
 			}
 			catch(NumberFormatException e)
-			{
-				System.out.println("Exception Caught!");
-				Toast toast2 = Toast.makeText(this, "Please try again.", Toast.LENGTH_SHORT);
-				toast2.show();				
+			{				
+				Toast toast6 = Toast.makeText(this, "Please Search again.", Toast.LENGTH_SHORT);
+				toast6.show();
+				break;
 			}
-			break;
-			
 		case R.id.view:
 			try
 			{
-				System.out.println("View Pressed");
+				System.out.println("View Pressed.");
 			    startActivity(new Intent(MainActivity.this, ViewAssignments.class));
 			    break;
 			}
 			catch(ActivityNotFoundException e)
 			{
-				Toast toast2 = Toast.makeText(this, "Activity Not Found", Toast.LENGTH_SHORT);
-				toast2.show();	
+				Toast toast7 = Toast.makeText(this, "Activity Not Found.", Toast.LENGTH_SHORT);
+				toast7.show();
+				break;
 			}
-		case R.id.edit:
+		case R.id.update:
 		    try {
 				String eTitle = assignTitle.getText().toString();
 				String eModule = assignModule.getText().toString();				
@@ -161,14 +166,16 @@ public class MainActivity extends Activity implements OnClickListener
 				myDB.open();
 				myDB.editAssignments(l, eTitle, eModule, eDueDate);	
 				myDB.close();
-				Toast toast2 = Toast.makeText(this, "Assignment successfully edited", Toast.LENGTH_SHORT);
-				toast2.show();	
+				Toast toast8 = Toast.makeText(this, "Assignment successfully edited.", Toast.LENGTH_SHORT);
+				toast8.show();	
 				break;
-			} catch (NumberFormatException e) 
+			} 
+		    catch (NumberFormatException e) 
 			{				
-				Toast toast2 = Toast.makeText(this, "No Title Entered", Toast.LENGTH_SHORT);
-				toast2.show();
+				Toast toast9 = Toast.makeText(this, "Nothing to Update.", Toast.LENGTH_SHORT);
+				toast9.show();
 				e.printStackTrace();
+				break;
 			}
 		case R.id.delete:
 			try {
@@ -179,15 +186,26 @@ public class MainActivity extends Activity implements OnClickListener
 				myDB.open();
 				myDB.delete(l);
 				myDB.close();
-				Toast toast2 = Toast.makeText(this, "Assignment successfully deleted", Toast.LENGTH_SHORT);
-				toast2.show();
-			} catch (NumberFormatException e) 
+				Toast toast11 = Toast.makeText(this, "Assignment successfully deleted", Toast.LENGTH_SHORT);
+				toast11.show();
+				break;
+			} 
+			catch (NumberFormatException e) 
 			{
-				Toast toast2 = Toast.makeText(this, "No Title Entered", Toast.LENGTH_SHORT);
+				Toast toast2 = Toast.makeText(this, "Nothing to delete.", Toast.LENGTH_SHORT);
 				toast2.show();
 				e.printStackTrace();
+				break;
 			}
+		case R.id.clear:
 			
+				assignTitle.setText(""); // Set EditTexts to appear blank when data is entered
+			    assignModule.setText("");						   
+			    assignDueDate.setText("");
+			    rowID.setText("");
+			    Toast toast12 = Toast.makeText(this, "Cleared.", Toast.LENGTH_SHORT);
+				toast12.show();	
+				break;
 	    }		
     }
 

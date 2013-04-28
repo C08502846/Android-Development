@@ -251,7 +251,9 @@ public class DBManager {
 		String myData = "" ;
 		while(c.moveToNext())
 		{
-			myData += "Title: " + c.getString(0) + "\n" + "Due Date: " + c.getString(1) + "\n"; //+ c.getString(2) + "\n"; 
+			myData +="------------------------------------------------" +"\n" + "Title: " + c.getString(0) + "\n" + "Due Date: " + c.getString(1) + "\n" + "\n"
+					+"------------------------------------------------"
+					+ "Press Complete if assignment is finished. Otherwise press Close"; //+ c.getString(2) + "\n"; 
 		}
 		return myData;
 	}

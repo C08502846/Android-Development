@@ -21,6 +21,7 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 {
 	
 	EditText assignTitle, assignDueDate, rowID ;
+	public String globalSelection ;
 
 	
 	DBManager myDB = new DBManager(this) ;
@@ -50,12 +51,12 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		  System.out.println("List Clicked");				  
 		  final String selection = l.getItemAtPosition(position).toString();
 		  
-		  System.err.println("ListView="+l);
-		  System.err.println("view="+v);
-		  System.err.println("position="+position); 
-		  System.err.println("id="+id); 
-		  System.err.println("selection="+selection);		  
-		  
+//		  System.err.println("ListView="+l);
+//		  System.err.println("view="+v);
+//		  System.err.println("position="+position); 
+//		  System.err.println("id="+id); 
+//		  System.err.println("selection="+selection);		  
+		  globalSelection = selection ;
 		  myDB.open();	
 		  String data = "Yo!!!";
 		  System.err.println("data="+data); 
@@ -78,11 +79,16 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		     {
 			     myDB.open();
 			     myDB.complete(selection);
+			     showToast();
+			     finish();
+			     startActivity(getIntent());		     
 			     myDB.close();		    
-		     }		   
+		     }	
+		   
 		  });
-		  AlertDialog alert = builder.create();
-		  alert.show();		  
+		  
+		  AlertDialog alert = builder.create();		  
+		  alert.show();			  
 		  myDB.close();		  
 	    }
 	public void complete(String selection)
@@ -103,6 +109,11 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 			startActivity(new Intent(ViewAssignments.this, MainActivity.class));
 		    break;
 		}		
-	}	  
+	}	
+	public void showToast()
+	{
+		Toast toast14 = Toast.makeText(this, "Congratulations on completing your " +globalSelection+ " assignment!", Toast.LENGTH_SHORT);
+		toast14.show();
+	}
 
 }

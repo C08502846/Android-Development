@@ -62,38 +62,45 @@
     </EditText>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="275dp"
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/get"
+            android:id="@+id/find"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/get" />
+            android:layout_height="70dp"
+            android:layout_weight="0.62"
+            android:text="@string/find" />
 
         <Button
-            android:id="@+id/edit"
+            android:id="@+id/update"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/edit" />
+            android:layout_height="match_parent"
+            android:layout_weight="0.48"
+            android:text="@string/update" />
+
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TableRow
-            android:id="@+id/tableRow1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-        </TableRow>
+            android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete"
-            android:layout_marginLeft="30dip" />
-    </FrameLayout>
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_weight="0.26"
+                android:selectAllOnFocus="true"
+                android:text="@string/delete" />
+
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_weight="0.31"
+                android:text="@string/clear_text" />
+
+        </LinearLayout>
+
 
 </LinearLayout>

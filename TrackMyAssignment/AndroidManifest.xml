@@ -24,7 +24,7 @@
         
         <activity
             android:name="com.example.trackmyassignment.MainActivity"
-            android:label="Add / Edit Assignment" >
+            android:label="Manage Assignments" >
             <intent-filter>
                 <action android:name="com.example.trackmyassignment.MainActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
