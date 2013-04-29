@@ -216,7 +216,7 @@ public class DBManager {
 		cv.put(KEY_DUEDATE, eDueDate);
 		myDB.update(DATABASE_TABLE, cv, KEY_ROWID + "=" + l, null);		
 	}
-
+   
 	public void delete(long l) 
 	{
 		myDB.delete(DATABASE_TABLE, KEY_ROWID + "=" + l, null); 
@@ -229,13 +229,13 @@ public class DBManager {
 		String myData = "" ;
 		while(c.moveToNext())
 		{
-			myData +="------------------------------------------------" +"\n" + "Title: " + c.getString(0) + "\n" + "Due Date: " + c.getString(1) + "\n" + "\n"
+			myData +="------------------------------------------------" +"\n" + "Title: " + c.getString(0) + "\n" + "Due Date: " + c.getString(1) + "\n"
 					+"------------------------------------------------"
-					+ "Press Complete if assignment is finished. Otherwise press Close"; //+ c.getString(2) + "\n"; 
+					+ "Press Complete if assignment is finished. Otherwise press Close\n"; //+ c.getString(2) + "\n"; 
 		}
 		return myData;
 	}
-	public void complete(String deleteData)
+	public void complete(String deleteData) // Function to delete row by rowID when user clicks Complete in Dialog in ViewAssignments
 	{
 		myDB.delete(DATABASE_TABLE, "assign_module"+" LIKE '"+deleteData+"%'", null);
 	}

@@ -16,7 +16,7 @@
     <string name="delete">Delete</string>
     <string name="complete">Complete</string>
     <string name="findByTitle">Find By Title</string>
-    <string name="add_new_assignment">Manage Assignments</string>
+    <string name="manageAssignments">Manage Assignments</string>
     <string name="clear_text">Clear</string>
     
     

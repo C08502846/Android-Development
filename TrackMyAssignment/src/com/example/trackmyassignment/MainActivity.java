@@ -111,8 +111,9 @@ public class MainActivity extends Activity implements OnClickListener
 					else // When fields are not empty, add Assignment
 					{
 						 DBManager myDB = new DBManager(this);
-						 myDB.open(); 
-						 myDB.addAssignment(title, module, duedate); // Call function in DBManager class, adds 3 items
+						 myDB.open();
+						 						 
+						 myDB.addAssignment(title, module, duedate); // Call function in DBManager class, adds 3 items							
 						    
 						 assignTitle.setText(""); // Set EditTexts to appear blank when data is entered to illustrate completeness
 						 assignModule.setText("");						   
@@ -127,7 +128,7 @@ public class MainActivity extends Activity implements OnClickListener
 						 toast3.show(); 
 						 break;
 					}		    
-			   					
+			   					//TODO - FIND BY TITLE INSTEAD OF ROWID! 
 		case R.id.find: // When find button is pressed
 			try // try and get data after entering a specific rowID
 			{
@@ -191,7 +192,7 @@ public class MainActivity extends Activity implements OnClickListener
 				myDB.open();
 				myDB.updateAssignments(l, eTitle, eModule, eDueDate);	
 				myDB.close();
-				Toast toast8 = Toast.makeText(this, "Assignment successfully edited.", Toast.LENGTH_SHORT);
+				Toast toast8 = Toast.makeText(this, "Assignment successfully updated.", Toast.LENGTH_SHORT);
 				toast8.show();	
 				break;
 			} 
@@ -202,7 +203,7 @@ public class MainActivity extends Activity implements OnClickListener
 				e.printStackTrace();
 				break;
 			}
-		case R.id.delete:
+		case R.id.delete: //TODO - FIX DELETE PROBLEM!
 			try {
 				String s = rowID.getText().toString(); // Convert whats in Editext into long type
 				long l = Long.parseLong(s);

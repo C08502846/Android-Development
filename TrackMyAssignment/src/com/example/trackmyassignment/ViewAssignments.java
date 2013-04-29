@@ -22,26 +22,24 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 	
 	EditText assignTitle, assignDueDate, rowID ;
 	public String globalSelection ;
-
 	
 	DBManager myDB = new DBManager(this) ;
-	Button addNew ;
+	Button manageAssignments ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
-	{
-		
+	{		
 		assignTitle =  (EditText) findViewById(R.id.assignTitle);		  		
 		assignDueDate = (EditText) findViewById(R.id.assignDueDate);
-		rowID = (EditText) findViewById(R.id.rowID);
+		//rowID = (EditText) findViewById(R.id.rowID);
 		  
 		super.onCreate(savedInstanceState);
 	    setContentView(R.layout.view_assignments);
-	    addNew = (Button) findViewById(R.id.addNew);
-	    addNew.setOnClickListener(this);
+	    manageAssignments = (Button) findViewById(R.id.manageAssignments);
+	    manageAssignments.setOnClickListener(this);
 	    
 		myDB.open();		
 		String[] assignments = myDB.getModuleForList() ;
-		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, assignments));
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, assignments));		
 		myDB.close();
 	}
 	
@@ -49,29 +47,18 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 	    {
 		   //super.onListItemClick(null, v, position, id);
 		  System.out.println("List Clicked");				  
-		  final String selection = l.getItemAtPosition(position).toString();
-		  
-//		  System.err.println("ListView="+l);
-//		  System.err.println("view="+v);
-//		  System.err.println("position="+position); 
-//		  System.err.println("id="+id); 
-//		  System.err.println("selection="+selection);		  
-		  globalSelection = selection ;
+		  final String selection = l.getItemAtPosition(position).toString();		  
+		  globalSelection = selection ; // made for showToast method below
 		  myDB.open();	
-		  String data = "Yo!!!";
-		  System.err.println("data="+data); 
-		  
+		  String data = null ;		  
 		  data = myDB.getDataByModule(selection);
-		  
-		  System.err.println("data="+data); 
-		  
 		  AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		  builder.setTitle(selection).setMessage(myDB.getDataByModule(selection)).setCancelable(false).
 		  setNegativeButton("Close", new DialogInterface.OnClickListener(){
 			   public void onClick(DialogInterface dialog, int id)
 			     {
 				   Log.i("TEST", "Close Clicked!");
-			    	 // Closes Dialog
+			    	 // Closes Dialog by default
 			     }
 			  })
 		  .setPositiveButton("Complete", new DialogInterface.OnClickListener(){
@@ -91,20 +78,20 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		  alert.show();			  
 		  myDB.close();		  
 	    }
-	public void complete(String selection)
-	  {
-		    String cTitle = assignTitle.getText().toString();							
-			String cDueDate = assignDueDate.getText().toString();			
-			String s = rowID.getText().toString(); // Convert whats in Editext into long type
-			long l = Long.parseLong(s);
-			myDB.delete(l);
-	  }
+//	public void complete(String selection) // Function to delete row by rowID when user clicks Complete in Dialog
+//	  {
+//		    String cTitle = assignTitle.getText().toString();							
+//			String cDueDate = assignDueDate.getText().toString();			
+//			String s = rowID.getText().toString(); // Convert whats in Editext into long type
+//			long l = Long.parseLong(s);
+//			myDB.delete(l);
+//	  }
 	@Override
 	public void onClick(View v) 
 	{
 		switch(v.getId())
 		{
-		case R.id.addNew:
+		case R.id.manageAssignments:
 			System.out.println("Add New Pressed");
 			startActivity(new Intent(ViewAssignments.this, MainActivity.class));
 		    break;
@@ -115,10 +102,11 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		Toast toast14 = Toast.makeText(this, "Congratulations on completing your " +globalSelection+ " assignment!", Toast.LENGTH_SHORT);
 		toast14.show();
 	}
+	//TODO 
 	public void randomToastMaker()
 	{
 		Toast a, b, c, d, e, f, g ;
-		a = Toast.makeText(this, "Congratulations on completing your " +globalSelection+ " assignment!", Toast.LENGTH_SHORT);
+		a = Toast.makeText(this, "Congratulations on completing your " +globalSelection+ " assignment!", Toast.LENGTH_LONG);
 	}
 
 }

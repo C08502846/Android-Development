@@ -15,12 +15,13 @@
         </ListView>
 
         <Button
-            android:id="@+id/addNew"
+            android:id="@+id/manageAssignments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:minWidth="120dp"
-            android:text="@string/add_new_assignment" />
+            android:layout_alignBottom="@android:id/list"
+            android:layout_alignLeft="@android:id/list"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/manage_custom"
+            android:gravity="center_vertical|center_horizontal" />
  
 </RelativeLayout>

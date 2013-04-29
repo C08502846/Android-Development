@@ -36,17 +36,38 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/add"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_assign" />
+            android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/view"
+            <Button
+                android:id="@+id/add"
+                android:layout_width="173dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/add_custom"
+                android:gravity="center_vertical|center_horizontal" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/view_assign" />
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/view"
+                android:layout_width="173dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/view_custom"
+                android:gravity="center_vertical|center_horizontal" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
 
@@ -62,22 +83,20 @@
     </EditText>
 
     <LinearLayout
-        android:layout_width="275dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <Button
             android:id="@+id/find"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_weight="0.62"
-            android:text="@string/find" />
+            android:layout_height="match_parent"
+            android:background="@drawable/find_custom" />
 
         <Button
             android:id="@+id/update"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.48"
-            android:text="@string/update" />
+            android:background="@drawable/update_custom" />
 
     </LinearLayout>
 
@@ -88,19 +107,29 @@
             <Button
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_weight="0.26"
-                android:selectAllOnFocus="true"
-                android:text="@string/delete" />
-
+                android:layout_height="wrap_content"
+                android:background="@drawable/delete_custom" />
+            
             <Button
                 android:id="@+id/clear"
                 android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_weight="0.31"
-                android:text="@string/clear_text" />
+                android:layout_height="wrap_content"
+                android:background="@drawable/clear_custom" />
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/help_custom" />
+
+        </RelativeLayout>
 
 </LinearLayout>
