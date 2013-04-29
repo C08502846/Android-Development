@@ -3,17 +3,9 @@
  * 
  * Description: The purpose of this assignment is to manage and track your assignments in a database.
  * The user can add an assignment by entering in the title of the assignment, the module and the date
- * that it is due. The user can view the assignments, oldest first. The user can then click on each
- * item in the list of Modules which brings up a dialog which displays the title of the assignment
- * and its due date. 
- * This Dialog Has 2 buttons. Complete and Close. User can press Complete which removes the
- * assignment from the list. They can click close to resume browsing their list. If User
- * presses complete, they are greeted with a friendly congratulations message on completing
- * their project, which I believe is important to keep students motivated and coming back
- * to use the app. Once finished browsing, the user can hit the one button that is under the list
- * 'Manage Assignments'.
- * This page is a lot more complex than the view page. There are 6 buttons.
- * All buttons give a response when first clicked to alert the user of a misclick or mistake.
+ * that it is due. The user can view the assignments, oldest first. * * 
+ * This page has 6 buttons
+ * All buttons give a response when first clicked to alert the user of a miss-click or mistake.
  * Add Button: User enters details. They cannot leave fields blank as appropriate error checking was implemented.
  * View Button: Starts the View Activity in which I explained earlier.
  * Then there is a Find By Title EditText field. The user can search assignment by title. They enter the title
@@ -49,7 +41,7 @@ public class MainActivity extends Activity implements OnClickListener
 	
 	Button add, update, view, find, delete, clear ; 
 	EditText assignTitle, assignModule, assignDueDate,
-	rowID ;
+	titleID ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -68,7 +60,7 @@ public class MainActivity extends Activity implements OnClickListener
 		assignTitle =  (EditText) findViewById(R.id.assignTitle);
 		assignModule = (EditText) findViewById(R.id.assignModule);		
 		assignDueDate = (EditText) findViewById(R.id.assignDueDate);
-		rowID = (EditText) findViewById(R.id.rowID);
+		titleID = (EditText) findViewById(R.id.titleID);
 
 		add.setOnClickListener(this);
 		view.setOnClickListener(this);
@@ -123,41 +115,50 @@ public class MainActivity extends Activity implements OnClickListener
 						 
 					     Dialog d = new Dialog(this);
 						 d.setTitle("Assignment Added.");					 
-						 Toast toast3 = Toast.makeText(this, "              " +
-						 "Assignment Added.\nGood Luck in your "+title+" Assignment!", Toast.LENGTH_SHORT);
+						 Toast toast3 = Toast.makeText(this,"Assignment Added.\nGood Luck in your "+title+" Assignment!", Toast.LENGTH_SHORT);
 						 toast3.show(); 
 						 break;
 					}		    
-			   					//TODO - FIND BY TITLE INSTEAD OF ROWID! 
+			   					
 		case R.id.find: // When find button is pressed
 			try // try and get data after entering a specific rowID
 			{
-				String s = rowID.getText().toString(); // Convert whats in Editext into long type
-				long l = Long.parseLong(s);
-				DBManager myDB2 = new DBManager(this);
-				myDB2.open();
-				String rTitle = myDB2.getTitle(l);
-				String rModule = myDB2.getModule(l);				
-				String rDueDate = myDB2.getDueDate(l) ;
-				myDB2.close();
-				
-				assignTitle.setText(rTitle); // set EditTexts to the values from our functions results if found
-				assignModule.setText(rModule);				
-				assignDueDate.setText(rDueDate);
-				
-				if(rTitle.isEmpty() && rModule.isEmpty()  && rDueDate.isEmpty()) // If no data returned from any fields display toast
+				String s = titleID.getText().toString(); // Convert whats in Editext into long type
+				//long l = Long.parseLong(s);
+				if(s.isEmpty())
 				{
-					Toast toast4 = Toast.makeText(this, "No Data Found.", Toast.LENGTH_SHORT);
-					toast4.show();
-					break;
-				}
-				else // Otherwise Data is found, alert the user
-				{
-					Toast toast5 = Toast.makeText(this, "" +rTitle+ " found.", Toast.LENGTH_SHORT);
-					toast5.show();
-					break;
-				}
+					Toast toastC = Toast.makeText(this, "No Data Found.", Toast.LENGTH_SHORT);
+					toastC.show();
+				}			
 				
+				else
+				{
+					DBManager myDB2 = new DBManager(this);
+					myDB2.open();					
+					String rTitle1 = myDB2.getTitle(s);
+					String rModule = myDB2.getModule(s);				
+					String rDueDate = myDB2.getDueDate(s) ;
+					myDB2.close();
+					
+					assignTitle.setText(rTitle1); // set EditTexts to the values from our functions results if found
+					assignModule.setText(rModule);				
+					assignDueDate.setText(rDueDate);
+					
+					if(rTitle1.isEmpty() && rModule.isEmpty()  && rDueDate.isEmpty()) // If no data returned from any fields display toast
+					{
+						Toast toast4 = Toast.makeText(this, "No Data Found.", Toast.LENGTH_SHORT);
+						toast4.show();	
+						break;
+					}
+					else // Otherwise Data is found, alert the user
+					{
+						Toast toast5 = Toast.makeText(this, "" +rTitle1+ " found.", Toast.LENGTH_SHORT);
+						toast5.show();	
+						break;
+					}
+					
+				}	
+				break;
 			}
 			catch(NumberFormatException e) // When Nothing was returned to the EditTexts Alert User
 			{				
@@ -183,17 +184,25 @@ public class MainActivity extends Activity implements OnClickListener
 				String eTitle = assignTitle.getText().toString();
 				String eModule = assignModule.getText().toString();				
 				String eDueDate = assignDueDate.getText().toString();
-				
-				String s = rowID.getText().toString(); // Convert whats in Editext into long type
-				long l = Long.parseLong(s);
-				
-				DBManager myDB ;
-				myDB = new DBManager(this) ;
-				myDB.open();
-				myDB.updateAssignments(l, eTitle, eModule, eDueDate);	
-				myDB.close();
-				Toast toast8 = Toast.makeText(this, "Assignment successfully updated.", Toast.LENGTH_SHORT);
-				toast8.show();	
+				if(eTitle.isEmpty() && eModule.isEmpty() && eDueDate.isEmpty())
+				{
+					Toast toastA = Toast.makeText(this, "Nothing to Update.", Toast.LENGTH_SHORT);
+					toastA.show();
+				}
+				else
+				{
+				    DBManager myDB ;
+				    myDB = new DBManager(this) ;
+				    myDB.open();
+				    myDB.updateAssignments(eTitle, eModule, eDueDate);	
+				    assignTitle.setText(""); // Set EditTexts to appear blank when data is entered to illustrate completeness
+				    assignModule.setText("");						   
+				    assignDueDate.setText("");
+				    myDB.close();
+				    Toast toast8 = Toast.makeText(this, "Assignment successfully updated.", Toast.LENGTH_SHORT);
+				    toast8.show();
+				    
+				}
 				break;
 			} 
 		    catch (NumberFormatException e) 
@@ -203,21 +212,32 @@ public class MainActivity extends Activity implements OnClickListener
 				e.printStackTrace();
 				break;
 			}
-		case R.id.delete: //TODO - FIX DELETE PROBLEM!
+		case R.id.delete:
 			try {
-				String s = rowID.getText().toString(); // Convert whats in Editext into long type
-				long l = Long.parseLong(s);
+				
+				String s = titleID.getText().toString();
+				System.out.printf("s =", s);
 				DBManager myDB ;
 				myDB = new DBManager(this) ;
-				myDB.open();
-				myDB.delete(l);
-				myDB.close();
-				assignTitle.setText(""); // Set EditTexts to appear blank when data is entered
-			    assignModule.setText("");						   
-			    assignDueDate.setText("");
-			    rowID.setText("");
-				Toast toast11 = Toast.makeText(this, "Assignment successfully deleted", Toast.LENGTH_SHORT);
-				toast11.show();
+				if(s.isEmpty())
+				{
+					Toast toastB = Toast.makeText(this, "Nothing to delete.", Toast.LENGTH_SHORT);
+					toastB.show();
+				}
+				else
+				{
+					myDB.open();
+					myDB.delete(s);
+					myDB.close();
+					assignTitle.setText(""); // Set EditTexts to appear blank when data is entered
+				    assignModule.setText("");						   
+				    assignDueDate.setText("");
+				    titleID.setText("");
+					Toast toast11 = Toast.makeText(this, "Assignment successfully deleted", Toast.LENGTH_SHORT);
+					toast11.show();
+				}
+					
+				
 				break;
 			} 
 			catch (NumberFormatException e) 
@@ -232,7 +252,7 @@ public class MainActivity extends Activity implements OnClickListener
 				assignTitle.setText(""); // Set EditTexts to appear blank when data is entered
 			    assignModule.setText("");						   
 			    assignDueDate.setText("");
-			    rowID.setText("");
+			    titleID.setText("");
 			    Toast toast12 = Toast.makeText(this, "Cleared.", Toast.LENGTH_SHORT);
 				toast12.show();	
 				break;

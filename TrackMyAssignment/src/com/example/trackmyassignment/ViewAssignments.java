@@ -1,3 +1,15 @@
+ /* ViewAssignments
+ * The user can then click on each
+ * item in the list of Modules which brings up a dialog which displays the title of the assignment
+ * and its due date. 
+ * This Dialog Has 2 buttons. Complete and Close. User can press Complete which removes the
+ * assignment from the list. They can click close to resume browsing their list. If User
+ * presses complete, they are greeted with a friendly congratulations message on completing
+ * their project, which I believe is important to keep students motivated and coming back
+ * to use the app. Once finished browsing, the user can hit the one button that is under the list
+ * 'Manage Assignments'.
+*/
+
 package com.example.trackmyassignment;
 
 import android.app.AlertDialog;
@@ -29,8 +41,7 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 	protected void onCreate(Bundle savedInstanceState)
 	{		
 		assignTitle =  (EditText) findViewById(R.id.assignTitle);		  		
-		assignDueDate = (EditText) findViewById(R.id.assignDueDate);
-		//rowID = (EditText) findViewById(R.id.rowID);
+		assignDueDate = (EditText) findViewById(R.id.assignDueDate);		
 		  
 		super.onCreate(savedInstanceState);
 	    setContentView(R.layout.view_assignments);
@@ -54,14 +65,14 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		  data = myDB.getDataByModule(selection);
 		  AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		  builder.setTitle(selection).setMessage(myDB.getDataByModule(selection)).setCancelable(false).
-		  setNegativeButton("Close", new DialogInterface.OnClickListener(){
+		  setNegativeButton("No", new DialogInterface.OnClickListener(){
 			   public void onClick(DialogInterface dialog, int id)
 			     {
 				   Log.i("TEST", "Close Clicked!");
 			    	 // Closes Dialog by default
 			     }
 			  })
-		  .setPositiveButton("Complete", new DialogInterface.OnClickListener(){
+		  .setPositiveButton("Yes", new DialogInterface.OnClickListener(){
 		   public void onClick(DialogInterface dialog, int id)
 		     {
 			     myDB.open();
@@ -78,21 +89,14 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		  alert.show();			  
 		  myDB.close();		  
 	    }
-//	public void complete(String selection) // Function to delete row by rowID when user clicks Complete in Dialog
-//	  {
-//		    String cTitle = assignTitle.getText().toString();							
-//			String cDueDate = assignDueDate.getText().toString();			
-//			String s = rowID.getText().toString(); // Convert whats in Editext into long type
-//			long l = Long.parseLong(s);
-//			myDB.delete(l);
-//	  }
+
 	@Override
 	public void onClick(View v) 
 	{
 		switch(v.getId())
 		{
 		case R.id.manageAssignments:
-			System.out.println("Add New Pressed");
+			System.out.println("Manage Assignments");
 			startActivity(new Intent(ViewAssignments.this, MainActivity.class));
 		    break;
 		}		
@@ -102,11 +106,4 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 		Toast toast14 = Toast.makeText(this, "Congratulations on completing your " +globalSelection+ " assignment!", Toast.LENGTH_SHORT);
 		toast14.show();
 	}
-	//TODO 
-	public void randomToastMaker()
-	{
-		Toast a, b, c, d, e, f, g ;
-		a = Toast.makeText(this, "Congratulations on completing your " +globalSelection+ " assignment!", Toast.LENGTH_LONG);
-	}
-
 }

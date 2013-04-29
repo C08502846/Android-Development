@@ -106,27 +106,17 @@ public class DBManager {
 		return result;
 	}
 
-	public String getTitle(long l) // Get Title by rowID
+
+	public String getTitle(String title) // Get Title by rowID
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
-		String title = "" ;
+		Cursor c = myDB.query(DATABASE_TABLE, columns, "assign_title"+" LIKE '"+title+"%'", null, null, null, null);
+		String rTitle = "" ;
 		while(c.moveToNext())
 		{
-			title = c.getString(1);
+			rTitle = c.getString(1);
 		}
-		return title;
-	}
-	public String getTitle1() 
-	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
-		String title = "" ;
-		while(c.moveToNext())
-		{
-			title += c.getString(1) + "\n";
-		}
-		return title;
+		return rTitle;
 	}
 	public String[] getTitleForList() 
 	{
@@ -158,44 +148,32 @@ public class DBManager {
 		String[] modulesReturn = (String[]) modules.toArray(new String[modules.size()]);
 
 		return modulesReturn;
-	}		
+	}	
 
-	public String getModule(long l) 
+	public String getModule(String title) 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
-		String module = "" ;
+		Cursor c = myDB.query(DATABASE_TABLE, columns, "assign_title"+" LIKE '"+title+"%'", null, null, null, null);
+		String rTitle = "" ;
 		while(c.moveToNext())
 		{
-			module = c.getString(2);
+			rTitle = c.getString(2);
 		}
-		return module;
+		return rTitle;
 	}
 
-	public String getDescription(long l) 
-	{
-	    String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
-	    Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
-	    String description = "" ;
-	while(c.moveToNext())
-	{
-		description = c.getString(3);
-	}
-	return description;
-	}
 
-	public String getDueDate(long l) 
+	public String getDueDate(String title) 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
-		String duedate = "" ;
+		Cursor c = myDB.query(DATABASE_TABLE, columns, "assign_title"+" LIKE '"+title+"%'", null, null, null, null);
+		String rTitle = "" ;
 		while(c.moveToNext())
 		{
-			duedate = c.getString(3);
+			rTitle = c.getString(3);
 		}
-		return duedate;
+		return rTitle;
 	}
-
 	public String getDataPos(long l) 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
@@ -207,19 +185,19 @@ public class DBManager {
 		}
 		return allInfo;
 	}
-
-	public void updateAssignments(long l, String eTitle, String eModule, String eDueDate) 
+	
+	public void updateAssignments(String eTitle, String eModule, String eDueDate) 
 	{
 		ContentValues cv = new ContentValues();
 		cv.put(KEY_TITLE, eTitle);
 		cv.put(KEY_MODULE, eModule);
 		cv.put(KEY_DUEDATE, eDueDate);
-		myDB.update(DATABASE_TABLE, cv, KEY_ROWID + "=" + l, null);		
+		myDB.update(DATABASE_TABLE, cv, "assign_title"+" LIKE '"+eTitle+"%'", null);		
 	}
    
-	public void delete(long l) 
+	public void delete(String title) 
 	{
-		myDB.delete(DATABASE_TABLE, KEY_ROWID + "=" + l, null); 
+		myDB.delete(DATABASE_TABLE, "assign_title"+" LIKE '"+title+"%'", null); 
 	}
 	
 	public String getDataByModule(String myString)
@@ -231,7 +209,7 @@ public class DBManager {
 		{
 			myData +="------------------------------------------------" +"\n" + "Title: " + c.getString(0) + "\n" + "Due Date: " + c.getString(1) + "\n"
 					+"------------------------------------------------"
-					+ "Press Complete if assignment is finished. Otherwise press Close\n"; //+ c.getString(2) + "\n"; 
+					+ "Assignment Completed?\n"; //+ c.getString(2) + "\n"; 
 		}
 		return myData;
 	}
