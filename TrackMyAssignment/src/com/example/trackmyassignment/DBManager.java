@@ -1,25 +1,22 @@
 /*
- * Mobile Software Development - Assignment
- * Student Number: C08502846
- * Github Repository(Public): https://github.com/C08502846/Android-Development
+ * MOBILE SOFTWARE DEVELOPMENT ASSIGNMENT
+ * STUDENT NUMBER: C08502846
+ * This class is my Database Manager Class.
+ * It creates and sets up my database. It creates my table/s and all of the tables columns
+ * Its purpose is to handle all of database queries used in my application.
+ * 
  */
-
-
 package com.example.trackmyassignment;
-
 import java.util.ArrayList;
-
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 
-
-public class DBManager {
+public class DBManager 
+{
 	
 	public static final String KEY_ROWID = "_id";
 	public static final String KEY_TITLE = "assign_title";
@@ -63,21 +60,25 @@ public class DBManager {
 			onCreate(db);			
 		}		
 	}
+	
 	public DBManager(Context c)
 	{
 		myContext = c;
 	}
+	
 	public DBManager open()
 	{
 		myHelper = new DbHelper(myContext);
 		myDB = myHelper.getWritableDatabase();
 		return this;
 	}
+	
 	public void close()
 	{
 		myHelper.close(); // To close DbHelper
 	}
-
+	
+    // This method adds(using insert) an assignment by passing in title, module and duedate to a new ContentValues.
 	public long addAssignment(String title, String module, String duedate) 
 	{
 		ContentValues cv = new ContentValues();
@@ -86,28 +87,9 @@ public class DBManager {
 		cv.put(KEY_DUEDATE, duedate);
 		return myDB.insert(DATABASE_TABLE, null, cv);			
 	}
-
-	public String getAllData() 
-	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
-		String result = "" ;
-		
-//		int iRow = c.getColumnIndex(KEY_ROWID);
-//		int iTitle = c.getColumnIndex(KEY_TITLE);
-//		int iModule = c.getColumnIndex(KEY_MODULE);
-//		int iDescription = c.getColumnIndex(KEY_DESCRIPTION);
-//		int iDueDate = c.getColumnIndex(KEY_DUEDATE);
-		
-		while(c.moveToNext())
-		{
-			result = result +c.getString(0)+","  +c.getString(1)+ "," +c.getString(2)+"," +c.getString(3)+ "\n";
-		}
-		return result;
-	}
-
-
-	public String getTitle(String title) // Get Title by rowID
+	
+	// This method passes in a  string and queries assignment title according to that string using LIKE SQL statement
+	public String getTitle(String title) 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
 		Cursor c = myDB.query(DATABASE_TABLE, columns, "assign_title"+" LIKE '"+title+"%'", null, null, null, null);
@@ -118,22 +100,9 @@ public class DBManager {
 		}
 		return rTitle;
 	}
-	public String[] getTitleForList() 
-	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, null, null, null, null, null);
-		String[] title = null  ;
-		int i = 0 ;
-		ArrayList<String> columnArray1 = new ArrayList<String>();
-		while(c.moveToNext())
-		        {			
-			        columnArray1.add(c.getString(1));
-		        }
-		String[] colStrArr1 = (String[]) columnArray1.toArray(new String[columnArray1.size()]);
-
-		return colStrArr1;
-	}
 	
+	// This method queries the Modules column and places them in an ArrayList which is then converted to a String array
+	// Source: http://stackoverflow.com/questions/8938847/android-transform-each-column-of-a-cursor-into-a-string-array
 	public String[] getModuleForList() 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_MODULE};
@@ -149,7 +118,8 @@ public class DBManager {
 
 		return modulesReturn;
 	}	
-
+	
+    // Returns a string when a Title is passed in and is found in the Title column
 	public String getModule(String title) 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
@@ -161,8 +131,8 @@ public class DBManager {
 		}
 		return rTitle;
 	}
-
-
+	
+	// Returns a string when a Title is passed in and is found in the Title column
 	public String getDueDate(String title) 
 	{
 		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
@@ -174,18 +144,8 @@ public class DBManager {
 		}
 		return rTitle;
 	}
-	public String getDataPos(long l) 
-	{
-		String[] columns = new String[]{ KEY_ROWID, KEY_TITLE, KEY_MODULE, KEY_DUEDATE};
-		Cursor c = myDB.query(DATABASE_TABLE, columns, KEY_ROWID + "=" + l, null, null, null, null);
-		String allInfo = "" ;
-		while(c.moveToNext())
-		{
-			allInfo = c.getString(4);
-		}
-		return allInfo;
-	}
 	
+	// Updates Assignments Table by passing in 3 values, using SQL Update
 	public void updateAssignments(String eTitle, String eModule, String eDueDate) 
 	{
 		ContentValues cv = new ContentValues();
@@ -194,12 +154,14 @@ public class DBManager {
 		cv.put(KEY_DUEDATE, eDueDate);
 		myDB.update(DATABASE_TABLE, cv, "assign_title"+" LIKE '"+eTitle+"%'", null);		
 	}
-   
+	
+    // Simply deletes a row when title passed in, matches a title in the Title column
 	public void delete(String title) 
 	{
 		myDB.delete(DATABASE_TABLE, "assign_title"+" LIKE '"+title+"%'", null); 
 	}
 	
+	// When a user clicks an item in the list, pass in the module selected and return data from Title and Duedate Columns
 	public String getDataByModule(String myString)
 	{
 		String[] columns = new String[]{ KEY_TITLE, KEY_DUEDATE};
@@ -213,7 +175,8 @@ public class DBManager {
 		}
 		return myData;
 	}
-	public void complete(String deleteData) // Function to delete row by rowID when user clicks Complete in Dialog in ViewAssignments
+	// Function to delete row by module when user clicks Complete in Dialog in ViewAssignments
+	public void complete(String deleteData) 
 	{
 		myDB.delete(DATABASE_TABLE, "assign_module"+" LIKE '"+deleteData+"%'", null);
 	}

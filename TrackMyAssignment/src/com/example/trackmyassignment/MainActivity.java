@@ -39,7 +39,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements OnClickListener
 {
 	
-	Button add, update, view, find, delete, clear ; 
+	Button add, update, view, find, delete, clear, help ; 
 	EditText assignTitle, assignModule, assignDueDate,
 	titleID ;
 
@@ -56,6 +56,7 @@ public class MainActivity extends Activity implements OnClickListener
 		update = (Button) findViewById(R.id.update);
 		delete = (Button) findViewById(R.id.delete);
 		clear = (Button) findViewById(R.id.clear);
+		help = (Button) findViewById(R.id.help);
 		
 		assignTitle =  (EditText) findViewById(R.id.assignTitle);
 		assignModule = (EditText) findViewById(R.id.assignModule);		
@@ -68,6 +69,7 @@ public class MainActivity extends Activity implements OnClickListener
 		update.setOnClickListener(this);
 		delete.setOnClickListener(this);
 		clear.setOnClickListener(this);
+		help.setOnClickListener(this);
 	}
 	@SuppressLint("NewApi")
 	@Override
@@ -256,6 +258,11 @@ public class MainActivity extends Activity implements OnClickListener
 			    Toast toast12 = Toast.makeText(this, "Cleared.", Toast.LENGTH_SHORT);
 				toast12.show();	
 				break;
+		case R.id.help:
+			System.out.println("Help Pressed.");
+		    startActivity(new Intent(MainActivity.this, Help.class));
+		    break;
+			
 	    }		
     }
 }

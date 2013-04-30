@@ -48,21 +48,23 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 	    manageAssignments = (Button) findViewById(R.id.manageAssignments);
 	    manageAssignments.setOnClickListener(this);
 	    
-		myDB.open();		
-		String[] assignments = myDB.getModuleForList() ;
+		myDB.open();
+		// Pass in modules found in Module Column in Assignments table.
+		String[] assignments = myDB.getModuleForList() ; 
+		// Populates each row according to the string array assignments
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.row, R.id.assignments, assignments));		
 		myDB.close();
 	}
 	
 	  protected void onListItemClick(ListView l, View v, int position, long id)
-	    {
-		   //super.onListItemClick(null, v, position, id);
-		  System.out.println("List Clicked");				  
+	    {	
+		  // Returns which row is selected and converts its' position into a string
 		  final String selection = l.getItemAtPosition(position).toString();		  
 		  globalSelection = selection ; // made for showToast method below
 		  myDB.open();	
 		  String data = null ;		  
 		  data = myDB.getDataByModule(selection);
+		  //Creates a dialog for when a row is pressed
 		  AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		  builder.setTitle(selection).setMessage(myDB.getDataByModule(selection)).setCancelable(false).
 		  setNegativeButton("No", new DialogInterface.OnClickListener(){
@@ -95,7 +97,7 @@ public class ViewAssignments extends ListActivity implements OnClickListener
 	{
 		switch(v.getId())
 		{
-		case R.id.manageAssignments:
+		case R.id.manageAssignments: // When button is pressed, move to the MainActivity class
 			System.out.println("Manage Assignments");
 			startActivity(new Intent(ViewAssignments.this, MainActivity.class));
 		    break;

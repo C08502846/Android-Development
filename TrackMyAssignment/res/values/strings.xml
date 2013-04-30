@@ -18,9 +18,7 @@
     <string name="findByTitle">Find By Title</string>
     <string name="manageAssignments">Manage Assignments</string>
     <string name="clear_text">Clear</string>
-    
-    
-    
-    
+    <string name="title_activity_help">Help</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
